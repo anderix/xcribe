@@ -77,7 +77,7 @@ $me = $auth->currentScribe();
                     <span class="muted">you</span>
                 <?php else: ?>
                     <form method="post" action="?page=scribes" class="inline"
-                          onsubmit="return confirm('Remove <?= htmlspecialchars($s['display_name'], ENT_QUOTES) ?>?');">
+                          onsubmit="return confirm(<?= jsAttr('Remove ' . $s['display_name'] . '?') ?>);">
                         <?= csrfField() ?>
                         <input type="hidden" name="action" value="remove">
                         <input type="hidden" name="scribe_id" value="<?= (int) $s['id'] ?>">

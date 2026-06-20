@@ -5,8 +5,24 @@
 
 class ScribeAuth {
 
+    // A real bcrypt hash used only to keep login timing constant when the
+    // submitted username does not exist. No password produces it.
+    private const DUMMY_HASH = '$2y$12$HQnqDB63nPxoM15unoh.uOhhRmXbAig9uAI9l.F8BN9d.JuqJQAny';
+
     public function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
+            // Harden the session cookie before it is issued: never readable from
+            // JavaScript, Secure whenever the request arrived over HTTPS (so a
+            // production deploy can't silently leak it over plain HTTP, while
+            // local http dev still works), and SameSite=Lax as CSRF defence in
+            // depth on top of the per-request token.
+            session_set_cookie_params([
+                'lifetime' => 0,
+                'path'     => '/',
+                'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+                'httponly' => true,
+                'samesite' => 'Lax',
+            ]);
             session_start();
         }
     }
@@ -16,7 +32,14 @@ class ScribeAuth {
         $stmt->execute([self::normalize($username)]);
         $scribe = $stmt->fetch();
 
-        if (!$scribe || !password_verify($password, $scribe['password_hash'])) {
+        // Always spend roughly the same time whether or not the username exists,
+        // so response timing can't be used to enumerate valid scribes. The dummy
+        // hash is a real bcrypt hash that nothing will ever match.
+        if (!$scribe) {
+            password_verify($password, self::DUMMY_HASH);
+            return false;
+        }
+        if (!password_verify($password, $scribe['password_hash'])) {
             return false;
         }
 
@@ -109,15 +132,22 @@ class ScribeAuth {
     }
 }
 
-// A friendly one-time password the owner can read aloud or paste: three short
-// lowercase words plus two digits, e.g. "mint-otter-sail-94". Avoids ambiguous
-// look-alikes and is far easier to hand off than a random hash.
+// A friendly one-time password the owner can read aloud or paste: four short
+// lowercase words plus two digits, e.g. "mint-otter-cedar-finch-94". Easy to
+// hand off, while four picks from this 60-word list plus the suffix give about
+// 30 bits of entropy — enough that the temporary secret can sit unused until
+// the scribe's first login without being guessable.
 function generateTempPassword(): string {
     $words = ['mint','otter','sail','river','maple','cloud','ember','quartz',
               'willow','cedar','harbor','pebble','meadow','finch','cobalt',
-              'lumen','thicket','marigold','juniper','sparrow','basalt','tundra'];
+              'lumen','thicket','marigold','juniper','sparrow','basalt','tundra',
+              'amber','birch','canyon','dune','fern','glade','hollow','ivory',
+              'kelp','lichen','moss','nectar','opal','prairie','reef','slate',
+              'timber','umber','valley','walnut','yarrow','zephyr','acorn','brook',
+              'coral','delta','elm','frost','garnet','heather','indigo','jade',
+              'larch','mesa','onyx','pine','ridge','spruce'];
     $pick = function () use ($words) {
         return $words[random_int(0, count($words) - 1)];
     };
-    return $pick() . '-' . $pick() . '-' . $pick() . '-' . random_int(10, 99);
+    return $pick() . '-' . $pick() . '-' . $pick() . '-' . $pick() . '-' . random_int(10, 99);
 }

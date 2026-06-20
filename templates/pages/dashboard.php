@@ -35,7 +35,7 @@ $pages = listPages();
                 <a href="?page=history&slug=<?= urlencode($p['slug']) ?>">History</a>
                 <?php if ($auth->isOwner()): ?>
                     <form method="post" action="?page=dashboard" class="inline"
-                          onsubmit="return confirm('Delete “<?= htmlspecialchars($p['title'], ENT_QUOTES) ?>” and its history? This cannot be undone.');">
+                          onsubmit="return confirm(<?= jsAttr('Delete “' . $p['title'] . '” and its history? This cannot be undone.') ?>);">
                         <?= csrfField() ?>
                         <input type="hidden" name="action" value="delete-page">
                         <input type="hidden" name="slug" value="<?= htmlspecialchars($p['slug']) ?>">

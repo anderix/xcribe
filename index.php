@@ -34,6 +34,20 @@ function csrfField(): string {
     return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars(csrfToken()) . '">';
 }
 
+// Embed a PHP string as a JavaScript string literal inside an HTML attribute
+// (e.g. onsubmit="return confirm(jsAttr(...))"). HTML-escaping alone is wrong
+// here: the HTML parser would decode an escaped quote back to a real one and
+// let it break out of the JS string. json_encode does the JS-string escaping;
+// the HEX flags turn quotes, apostrophes, tags, and ampersands into \uXXXX so
+// the result survives the surrounding HTML-attribute context; htmlspecialchars
+// then safely renders json_encode's own delimiting quotes.
+function jsAttr(string $value): string {
+    return htmlspecialchars(
+        json_encode($value, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP),
+        ENT_QUOTES
+    );
+}
+
 function verifyCsrf(): void {
     $token = $_POST['csrf_token'] ?? '';
     if (!hash_equals(csrfToken(), $token)) {
