@@ -1,0 +1,2 @@
+# Deny everything here from the web; the app reaches it by filesystem path.
+Require all denied

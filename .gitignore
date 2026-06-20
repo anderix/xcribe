@@ -1,0 +1,13 @@
+# Internal kickoff / design notes — not for the public repo.
+KICKOFF.md
+
+# Per-install state, never committed.
+db/xcribe.db
+db/xcribe.db-wal
+db/xcribe.db-shm
+
+# Page content belongs to the install, not the tool.
+pages/*.md
+
+.DS_Store
+*.log

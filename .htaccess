@@ -1,0 +1,15 @@
+# Never serve a SQLite database, even if one lands at the web root.
+<FilesMatch "\.db(-wal|-shm)?$">
+    Require all denied
+</FilesMatch>
+
+RewriteEngine On
+
+# Application internals are reachable only through index.php.
+RewriteRule ^src/        - [F,L]
+RewriteRule ^templates/  - [F,L]
+RewriteRule ^db/         - [F,L]
+RewriteRule ^config\.php$ - [F,L]
+
+# pages/ stays public on purpose: that is where the Axe viewer reads the
+# Markdown files it renders.
