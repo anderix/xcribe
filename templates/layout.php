@@ -17,7 +17,7 @@ $siteName = getSetting('site_name', APP_NAME);
     <link rel="stylesheet" href="/axe/default.css">
     <link rel="stylesheet" href="/brand.css"><!-- site brand; overrides default, 404s harmlessly when absent -->
     <link rel="stylesheet" href="/axe/axe.css">
-    <link rel="stylesheet" href="public/css/xcribe.css">
+    <link rel="stylesheet" href="public/css/xcribe.css?v=<?= @filemtime(APP_ROOT . '/public/css/xcribe.css') ?>">
     <script src="/axe/theme.js"></script>
 </head>
 <body>
