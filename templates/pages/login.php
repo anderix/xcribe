@@ -22,6 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Password
             <input type="password" name="password" required>
         </label>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit">Sign in</button>
     </form>
 </div>

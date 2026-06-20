@@ -1,150 +1,109 @@
-/* xcribe — management UI styling. Self-contained: the admin surface does not
-   depend on Axe being present (Axe only renders the public pages). */
+/* xcribe — a thin layer over Axe.
+   Axe (default.css + the site's brand.css + axe.css) supplies the palette,
+   typography, dark/light theming, and base styling for nav, tables, forms,
+   buttons, code, and the .theme-toggle, .ghost, and .tag helpers. Everything
+   here is xcribe-specific structure, and every colour is an Axe token so the
+   sun/moon switch carries the whole UI between light and dark. */
 
-:root {
-    --ink: #1d2330;
-    --muted: #6b7280;
-    --line: #e3e6ec;
-    --bg: #f6f7f9;
-    --card: #ffffff;
-    --accent: #5b3da8;        /* purple, nodding to the Excelano/anderix family */
-    --accent-ink: #ffffff;
-    --danger: #b42318;
-    --ok-bg: #e8f5ee;
-    --ok-ink: #16653a;
-    --err-bg: #fde8e6;
-    --err-ink: #8a1c14;
-    --radius: 10px;
-}
-
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    color: var(--ink);
-    background: var(--bg);
-}
-
-code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
-
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* --- Top bar --- */
-.topbar {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 0 1.25rem;
-    height: 56px;
-    background: var(--card);
-    border-bottom: 1px solid var(--line);
-}
-.brand { font-weight: 700; color: var(--ink); }
-.brand:hover { text-decoration: none; }
-.topnav { display: flex; gap: 1rem; }
-.topnav a { color: var(--muted); padding: .25rem 0; }
-.topnav a.active { color: var(--ink); font-weight: 600; }
-.who { margin-left: auto; display: flex; align-items: center; gap: .9rem; }
-.who-name { color: var(--muted); }
-.logout { color: var(--muted); }
-
-/* --- Layout --- */
-.content { max-width: 960px; margin: 1.75rem auto; padding: 0 1.25rem; }
-.gate { max-width: 420px; margin: 6vh auto; padding: 0 1.25rem; }
+/* --- Layout wrappers (main is already padded by Axe) --- */
+main.content { max-width: 980px; margin-inline: auto; }
+main.gate    { max-width: 440px; margin: 5vh auto; }
 
 .page-head {
     display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; margin-bottom: 1.25rem;
+    gap: 1rem; margin-bottom: 1.5rem;
 }
-.page-head h1 { margin: 0; font-size: 1.5rem; }
-.head-actions { display: flex; gap: .5rem; }
+.page-head h1 { margin: 0; }
+.head-actions { display: flex; gap: 0.5rem; }
 
-h1, h2 { color: var(--ink); }
+.muted { color: var(--color-text-muted); }
 
-/* --- Cards & forms --- */
+/* --- Nav extras (Axe paints the bar; these tune our items) --- */
+.nav-brand { font-weight: 700; }
+nav ul li a.active { font-weight: 700; text-decoration: underline; }
+nav .who-name { color: var(--color-nav-text); font-size: 0.9rem; opacity: 0.85; }
+
+/* Toggle for the bare gate pages, where there is no nav to host it. */
+.gate-toggle { position: fixed; top: 1rem; right: 1rem; z-index: var(--z-sticky); }
+
+/* --- Card surface (login/install/new-page/add-scribe) --- */
 .card {
-    background: var(--card);
-    border: 1px solid var(--line);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius);
+    box-shadow: var(--shadow);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
 }
-.card h1 { margin-top: 0; }
-.muted { color: var(--muted); }
+.card > h1:first-child, .card > h2:first-child { margin-top: 0; }
 
-label { display: block; margin: 0 0 1rem; font-weight: 600; }
-input[type=text], input[type=password], input[type=email] {
-    display: block; width: 100%; margin-top: .35rem;
-    padding: .6rem .7rem; font: inherit; font-weight: 400;
-    border: 1px solid var(--line); border-radius: 8px; background: #fff;
+/* --- Forms --- */
+.form-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.hint { font-weight: 400; color: var(--color-text-muted); }
+
+/* --- Listing tables (Axe styles th/td; this frames them as a card) --- */
+table.list {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
 }
-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
-
-.form-actions { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
-.hint { font-weight: 400; }
-
-/* --- Buttons --- */
-.btn {
-    display: inline-block; cursor: pointer;
-    padding: .55rem .9rem; font: inherit; font-weight: 600;
-    border: 1px solid var(--line); border-radius: 8px;
-    background: #fff; color: var(--ink); text-decoration: none;
-}
-.btn:hover { text-decoration: none; border-color: #c9cdd6; }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn-primary:hover { filter: brightness(1.07); }
-
-.link { background: none; border: none; padding: 0; font: inherit; color: var(--accent); cursor: pointer; }
-.link:hover { text-decoration: underline; }
-.link-danger { background: none; border: none; padding: 0; font: inherit; color: var(--danger); cursor: pointer; }
-.link-danger:hover { text-decoration: underline; }
-.inline { display: inline; }
-
-/* --- Tables --- */
-.list { width: 100%; border-collapse: collapse; background: var(--card);
-        border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.list th, .list td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); }
-.list thead th { font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
-.list tr:last-child td { border-bottom: none; }
 .list .actions { text-align: right; white-space: nowrap; }
-.list .actions a, .list .actions form { margin-left: .8rem; }
-.list tr.selected { background: #faf8ff; }
-.badge { display: inline-block; margin-left: .4rem; padding: 0 .45rem;
-         font-size: .72rem; border-radius: 999px; background: var(--ok-bg); color: var(--ok-ink); }
+.list .actions a, .list .actions form { margin-left: 0.85rem; }
+.list tr.selected { background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface)); }
+
+/* Inline text-buttons inside table rows: reset Axe's solid button to a link. */
+.link, .link-danger {
+    background: none; border: none; padding: 0; width: auto;
+    font: inherit; cursor: pointer;
+}
+.link { color: var(--color-accent); }
+.link:hover { color: var(--color-accent-hover); text-decoration: underline; background: none; }
+.link-danger { color: var(--color-danger); }
+.link-danger:hover { text-decoration: underline; background: none; }
+.inline { display: inline; }
 
 /* --- Editor --- */
 .editor { display: flex; flex-direction: column; gap: 1rem; }
 .md-input {
-    width: 100%; min-height: 60vh; resize: vertical;
-    padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius);
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 14px; line-height: 1.6; background: #fff;
+    min-height: 60vh;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.6;
 }
-.md-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* --- History --- */
 .rev-view { margin-top: 1.5rem; }
 .md-preview {
     white-space: pre-wrap; word-wrap: break-word;
-    padding: 1rem; background: var(--card);
-    border: 1px solid var(--line); border-radius: var(--radius);
-    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px;
+    padding: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-family: var(--font-mono); font-size: 14px;
 }
 
-/* --- Credential callout --- */
+/* --- One-time credential callout (highlight/warning tone) --- */
 .credential {
-    background: #fffbeb; border: 1px solid #f4e3a8;
-    border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+    background: color-mix(in srgb, var(--color-warning) 12%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-warning) 45%, var(--color-border));
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
 }
 .credential h2 { margin-top: 0; }
-.cred-grid { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1.25rem; margin: 0; }
-.cred-grid dt { color: var(--muted); }
+.cred-grid { display: grid; grid-template-columns: max-content 1fr; gap: 0.4rem 1.25rem; margin: 0; }
+.cred-grid dt { color: var(--color-text-muted); }
 .cred-grid dd { margin: 0; }
-.temp-pw { font-size: 1.05rem; padding: .15rem .45rem; background: #fff; border: 1px solid #f4e3a8; border-radius: 6px; }
+.temp-pw { font-size: 1.05rem; }
 
-/* --- Flash --- */
-.flash { padding: .7rem .9rem; border-radius: 8px; margin-bottom: 1rem; }
-.flash-success { background: var(--ok-bg); color: var(--ok-ink); }
-.flash-error { background: var(--err-bg); color: var(--err-ink); }
+/* --- Flash messages (Axe status tokens) --- */
+.flash { padding: 0.7rem 0.9rem; border-radius: var(--radius); margin-bottom: 1rem; border: 1px solid transparent; }
+.flash-success {
+    background: color-mix(in srgb, var(--color-success) 14%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-success) 40%, transparent);
+}
+.flash-error {
+    background: color-mix(in srgb, var(--color-danger) 14%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-danger) 40%, transparent);
+}

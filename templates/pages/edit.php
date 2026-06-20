@@ -21,8 +21,8 @@ $content = pageContent($page['slug']);
 <div class="page-head">
     <h1>Edit: <?= htmlspecialchars($page['title']) ?></h1>
     <div class="head-actions">
-        <a class="btn" href="<?= htmlspecialchars(pageViewUrl($page['slug'])) ?>" target="_blank" rel="noopener">View page</a>
-        <a class="btn" href="?page=history&slug=<?= urlencode($page['slug']) ?>">History</a>
+        <a class="ghost" href="<?= htmlspecialchars(pageViewUrl($page['slug'])) ?>" target="_blank" rel="noopener">View page</a>
+        <a class="ghost" href="?page=history&slug=<?= urlencode($page['slug']) ?>">History</a>
     </div>
 </div>
 
@@ -30,8 +30,8 @@ $content = pageContent($page['slug']);
     <?= csrfField() ?>
     <textarea name="content" class="md-input" spellcheck="true" autofocus><?= htmlspecialchars($content) ?></textarea>
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn" href="?page=dashboard">Back to pages</a>
+        <button type="submit">Save</button>
+        <a class="ghost" href="?page=dashboard">Back to pages</a>
         <span class="muted hint">Write in Markdown. Use <code>#</code> for a heading, <code>-</code> for a list, <code>**bold**</code> for emphasis.</span>
     </div>
 </form>

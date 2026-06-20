@@ -25,7 +25,7 @@ if (isset($_GET['rev'])) {
 ?>
 <div class="page-head">
     <h1>History: <?= htmlspecialchars($page['title']) ?></h1>
-    <a class="btn" href="?page=edit&slug=<?= urlencode($page['slug']) ?>">Back to editing</a>
+    <a class="ghost" href="?page=edit&slug=<?= urlencode($page['slug']) ?>">Back to editing</a>
 </div>
 
 <?php if (!$revisions): ?>
@@ -37,7 +37,7 @@ if (isset($_GET['rev'])) {
         <tbody>
         <?php foreach ($revisions as $i => $r): ?>
             <tr class="<?= $viewing && $viewing['id'] == $r['id'] ? 'selected' : '' ?>">
-                <td><?= htmlspecialchars($r['created_at']) ?><?= $i === 0 ? ' <span class="badge">current</span>' : '' ?></td>
+                <td><?= htmlspecialchars($r['created_at']) ?><?= $i === 0 ? ' <span class="tag">current</span>' : '' ?></td>
                 <td><?= htmlspecialchars($r['scribe_name'] ?? '—') ?></td>
                 <td class="actions">
                     <a href="?page=history&slug=<?= urlencode($page['slug']) ?>&rev=<?= (int) $r['id'] ?>">View</a>

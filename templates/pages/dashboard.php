@@ -14,7 +14,7 @@ $pages = listPages();
 ?>
 <div class="page-head">
     <h1>Pages</h1>
-    <a class="btn btn-primary" href="?page=page-new">New page</a>
+    <a class="ghost" href="?page=page-new">New page</a>
 </div>
 
 <?php if (!$pages): ?>

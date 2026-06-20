@@ -34,6 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Confirm password
             <input type="password" name="confirm" minlength="8" required>
         </label>
-        <button type="submit" class="btn btn-primary">Save password</button>
+        <button type="submit">Save password</button>
     </form>
 </div>

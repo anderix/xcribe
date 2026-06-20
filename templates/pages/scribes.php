@@ -101,6 +101,6 @@ $me = $auth->currentScribe();
         <label>Username
             <input type="text" name="username" placeholder="kayla" required>
         </label>
-        <button type="submit" class="btn btn-primary">Add scribe</button>
+        <button type="submit">Add scribe</button>
     </form>
 </div>

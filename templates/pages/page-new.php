@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($title === '')            $errors[] = 'A title is required.';
-    if (!isValidSlug($slug))      $errors[] = 'Address must be lowercase letters, digits, and hyphens (e.g. spring-campout).';
+    if (!isValidSlug($slug))      $errors[] = 'Address must be lowercase letters, digits, and hyphens (e.g. about-us).';
     if (!$errors && getPageBySlug($slug)) $errors[] = 'A page with that address already exists.';
 
     if (!$errors) {
@@ -27,14 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post" action="?page=page-new">
         <?= csrfField() ?>
         <label>Title
-            <input type="text" name="title" placeholder="Spring Campout" value="<?= htmlspecialchars($_POST['title'] ?? '') ?>" required autofocus>
+            <input type="text" name="title" placeholder="About Us" value="<?= htmlspecialchars($_POST['title'] ?? '') ?>" required autofocus>
         </label>
         <label>Address <span class="muted">(optional — made from the title if blank)</span>
-            <input type="text" name="slug" placeholder="spring-campout" value="<?= htmlspecialchars($_POST['slug'] ?? '') ?>">
+            <input type="text" name="slug" placeholder="about-us" value="<?= htmlspecialchars($_POST['slug'] ?? '') ?>">
         </label>
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Create page</button>
-            <a class="btn" href="?page=dashboard">Cancel</a>
+            <button type="submit">Create page</button>
+            <a class="ghost" href="?page=dashboard">Cancel</a>
         </div>
     </form>
 </div>

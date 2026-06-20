@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post" action="?page=install">
         <?= csrfField() ?>
         <label>Site name
-            <input type="text" name="site_name" placeholder="Troop 99" value="<?= htmlspecialchars($_POST['site_name'] ?? '') ?>" required>
+            <input type="text" name="site_name" placeholder="Acme Co" value="<?= htmlspecialchars($_POST['site_name'] ?? '') ?>" required>
         </label>
         <label>Your name
             <input type="text" name="display_name" placeholder="Jane Smith" value="<?= htmlspecialchars($_POST['display_name'] ?? '') ?>" required>
@@ -43,6 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Password
             <input type="password" name="password" minlength="8" required>
         </label>
-        <button type="submit" class="btn btn-primary">Create owner account</button>
+        <button type="submit">Create owner account</button>
     </form>
 </div>
