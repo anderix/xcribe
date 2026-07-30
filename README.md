@@ -2,7 +2,7 @@
 
 A drop-in that lets a few non-technical people edit a handful of Markdown pages in the browser. You plant it beside your static pages, give two to four people a username and password, and they can change the page text themselves — no editor to install, no Git, no deploy step. The pages they write are public; the password only gates editing.
 
-xcribe is the prose counterpart to a directory browser like [browse](https://github.com/anderix/browse): the same "drop a folder on the site and point it at [Axe](https://github.com/anderix/axe)" shape, except here the tool also *writes* the files. Editing is content-only, because Markdown is content — there is no code surface for a scribe to break.
+xcribe is the prose counterpart to a directory browser like [browse](https://github.com/anderix/browse): the same "drop a folder on the site and point it at [Axe](https://github.com/excelano/axe)" shape, except here the tool also *writes* the files. Editing is content-only, because Markdown is content — there is no code surface for a scribe to break.
 
 The people you grant access to are **scribes**. The first account, created at setup, is the **owner**; the owner adds and removes scribes.
 
