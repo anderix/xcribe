@@ -43,4 +43,4 @@ Every save is kept. A page's **History** lists each saved version, who saved it,
 
 ## Attribution
 
-Author: David M. Anderson. Built with AI assistance (Claude, Anthropic).
+Author: David M. Anderson.
