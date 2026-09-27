@@ -40,7 +40,3 @@ To remove someone, the owner clicks **Remove** next to their name. The last owne
 ## Versions and undo
 
 Every save is kept. A page's **History** lists each saved version, who saved it, and when; any earlier version can be viewed and restored. Restoring writes that text back as a new save, so nothing is ever lost — the safety net a non-technical editor needs.
-
-## Attribution
-
-Author: David M. Anderson.
