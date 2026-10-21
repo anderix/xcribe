@@ -16,7 +16,7 @@ index.php            Front controller; ?page= selects a screen.
 src/                 db, auth (local password, bcrypt), and the page model.
 templates/           Login, setup, dashboard, editor, history, scribe management.
 pages/               The editable Markdown files — public, rendered by Axe.
-db/                  SQLite: scribes, page index, and version history.
+db/                  The schema, and by default the SQLite database: scribes, page index, version history.
 public/css/          The management-screen styling (the admin UI, not the pages).
 ```
 

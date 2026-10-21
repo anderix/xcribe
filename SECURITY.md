@@ -27,6 +27,6 @@ xcribe has two surfaces with very different exposure, and it is worth being prec
 A few things only the deployer can do, and xcribe cannot enforce them for you:
 
 - **Serve over HTTPS.** Passwords and session cookies cross the wire on every sign-in.
-- **Protect the internals.** The bundled `.htaccess` denies web access to `src/`, `templates/`, `db/`, and `config.php`, and refuses to serve any `*.db` file. This relies on Apache honoring `.htaccess`. On nginx or other servers, deny those paths in your server configuration — the SQLite database holds every password hash and must never be web-readable.
+- **Protect the internals.** The bundled `.htaccess` denies web access to `src/`, `templates/`, `db/`, `config.php` and `config.local.php`, and refuses to serve any `*.db` file. This relies on Apache honoring `.htaccess`. On nginx or other servers, deny those paths in your server configuration — the SQLite database holds every password hash and must never be web-readable. Where the host allows it, keep the database outside the web root altogether by defining `DATA_DIR` in a `config.local.php` beside `config.php`.
 - **Keep scribes few and trusted.** All scribes can edit all pages; the model is a small group of known people, not public registration. There is no rate limiting on login, so put xcribe behind your host's protections if it faces the open internet.
 - **Hand off temporary passwords out of band.** Read the one-time password to the new scribe directly; it is shown in the browser only once and is never emailed.

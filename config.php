@@ -1,4 +1,8 @@
 <?php
+// config.php
+// Author: David M. Anderson
+// Built with AI assistance (Claude, Anthropic)
+//
 // xcribe configuration — the one file you edit per install.
 //
 // xcribe is a drop-in: plant this directory beside your static pages, point it
@@ -21,5 +25,13 @@ define('AXE_VIEW', '/axe/view/');
 // Filesystem locations. You normally do not need to change these.
 define('APP_ROOT', __DIR__);
 define('PAGES_DIR', APP_ROOT . '/pages');     // the editable .md files live here
-define('DB_PATH', APP_ROOT . '/db/xcribe.db');
 define('SCHEMA_PATH', APP_ROOT . '/db/schema.sql');
+
+// The database lives in DATA_DIR, which defaults to db/. To keep it outside
+// the web root, define DATA_DIR in a config.local.php beside this file;
+// deploys must leave that file in place.
+if (is_file(APP_ROOT . '/config.local.php')) {
+    require APP_ROOT . '/config.local.php';
+}
+defined('DATA_DIR') || define('DATA_DIR', APP_ROOT . '/db');
+define('DB_PATH', DATA_DIR . '/xcribe.db');

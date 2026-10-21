@@ -5,6 +5,7 @@ KICKOFF.md
 db/xcribe.db
 db/xcribe.db-wal
 db/xcribe.db-shm
+config.local.php
 
 # Page content belongs to the install, not the tool.
 pages/*.md
